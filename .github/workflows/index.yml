@@ -1,0 +1,83 @@
+# Builds the PEP 503 index for pkg.mlaify.io from the GitHub releases listed in sources.toml and
+# deploys it to GitHub Pages: every six hours, on demand, and on every push to main. Pull requests
+# run the tests only. A failed build deploys nothing, so the live index stays as it was.
+#
+# GitHub disables scheduled workflows in a public repository after 60 days without a commit.
+# The deploy still happens on push and on demand; README.md "Freshness" says how to notice.
+name: index
+
+on:
+  schedule:
+    - cron: '7 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# One deploy at a time; pull requests test in their own group.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && github.ref || 'pages' }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Tests (standard library only)
+        run: |
+          python3 --version
+          python3 -B tests/test_build_index.py -v
+
+  build:
+    needs: test
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the index
+        env:
+          # The job's own read-only token: it raises the API rate limit. build_index.py sends it
+          # to api.github.com only, never to the hosts the release downloads redirect to.
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 -B build_index.py --out "$RUNNER_TEMP/site"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ runner.temp }}/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # One issue (label ci-failure) when a scheduled or main run fails, with the log up to the
+  # error; closed by the next passing run. See mlaify/.github actions/report-failure.
+  report:
+    needs: [test, build, deploy]
+    if: always() && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      issues: write
+    steps:
+      - uses: mlaify/.github/actions/report-failure@cb1e169ab778720d39339c57a4b6b042cafaf617
+        with:
+          result: ${{ contains(needs.*.result, 'failure') && 'failure' || (contains(needs.*.result, 'cancelled') && 'cancelled' || 'success') }}
