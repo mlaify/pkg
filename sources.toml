@@ -1,0 +1,73 @@
+# What the index lists. build_index.py reads every non-draft, non-pre-release GitHub release of
+# each repository below, keeps the assets whose names match one of its patterns, and links them
+# from https://pkg.mlaify.io/pypi/simple/<project>/ with the SHA-256 GitHub recorded for each.
+# Release a project as usual and it appears at the next run (every six hours, or run the
+# workflow by hand).
+#
+# Ported from ci-publish packages/sources.toml (2026-11-09), the previous publisher of this index.
+
+[[repo]]
+repo = "mlaify/AttackMap"
+assets = ['^attackmap-[0-9][^/]*-py3-none-any\.whl$', '^attackmap-[0-9][^/]*\.tar\.gz$']
+
+# The AttackMap analyzers. Wheel and sdist names use underscores (attackmap_analyzer_go-0.2.0-...).
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-atproto"
+assets = ['^attackmap_analyzer_atproto-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_atproto-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-c"
+assets = ['^attackmap_analyzer_c-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_c-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-cpp"
+assets = ['^attackmap_analyzer_cpp-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_cpp-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-dotnet"
+assets = ['^attackmap_analyzer_dotnet-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_dotnet-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-go"
+assets = ['^attackmap_analyzer_go-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_go-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-iac"
+assets = ['^attackmap_analyzer_iac-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_iac-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-java-spring"
+assets = ['^attackmap_analyzer_java_spring-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_java_spring-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-node-service"
+assets = ['^attackmap_analyzer_node_service-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_node_service-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-omeka-s"
+assets = ['^attackmap_analyzer_omeka_s-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_omeka_s-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-php-laminas"
+assets = ['^attackmap_analyzer_php_laminas-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_php_laminas-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-php-web"
+assets = ['^attackmap_analyzer_php_web-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_php_web-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-python"
+assets = ['^attackmap_analyzer_python-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_python-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-rust"
+assets = ['^attackmap_analyzer_rust-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_rust-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-swift"
+assets = ['^attackmap_analyzer_swift-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_swift-[0-9][^/]*\.tar\.gz$']
+
+[[repo]]
+repo = "mlaify/attackmap-analyzer-terraform"
+assets = ['^attackmap_analyzer_terraform-[0-9][^/]*-py3-none-any\.whl$', '^attackmap_analyzer_terraform-[0-9][^/]*\.tar\.gz$']
