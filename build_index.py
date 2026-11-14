@@ -214,8 +214,10 @@ code,pre{{background:#f2f2f2;padding:.1rem .3rem}}pre{{padding:.6rem;overflow-x:
 @media (prefers-color-scheme:dark){{body{{background:#111;color:#ddd}}a{{color:#8ab4f8}}code,pre{{background:#222}}}}</style>
 </head><body>
 <h1>M&amp;L AI package index</h1>
-<p>A PEP 503 simple index for AttackMap and its analyzer plugins, which are not on PyPI.
-Every file is a GitHub release asset of its project; the index records its SHA-256.</p>
+<p>A PEP 503 simple index for AttackMap and its analyzer plugins.
+Every file is a GitHub release asset of its project; the index records its SHA-256.
+The same files are also on <a href="https://pypi.org/project/attackmap/">PyPI</a>
+(<code>uv tool install "attackmap[all]"</code>).</p>
 <pre>uv tool install "attackmap[all]" --index mlaify=https://{esc(domain)}/pypi/simple/ --index-strategy first-index</pre>
 <p>Use <code>--index-strategy first-index</code> so each package comes from this index when it has it.
 See <a href="https://github.com/mlaify/AttackMap">mlaify/AttackMap</a>.</p>

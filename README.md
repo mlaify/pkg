@@ -1,8 +1,18 @@
 # pkg.mlaify.io
 
 The Python package index for [AttackMap](https://github.com/mlaify/AttackMap) and its 15 analyzer
-plugins, which are not on PyPI. A [PEP 503](https://peps.python.org/pep-0503/) simple index served
-by GitHub Pages at <https://pkg.mlaify.io/pypi/simple/>.
+plugins. A [PEP 503](https://peps.python.org/pep-0503/) simple index served by GitHub Pages at
+<https://pkg.mlaify.io/pypi/simple/>.
+
+Since AttackMap 0.6.4 the same packages are also on [PyPI](https://pypi.org/project/attackmap/),
+uploaded by each repository's release workflow from the same GitHub release files that this index
+links, so both serve identical bytes. Most people can just use PyPI:
+
+```bash
+uv tool install "attackmap[all]"
+```
+
+This index stays for installs that want only mlaify-built packages:
 
 ```bash
 uv tool install "attackmap[all]" --index mlaify=https://pkg.mlaify.io/pypi/simple/ --index-strategy first-index
